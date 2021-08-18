@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @EntityListeners(value = {MyEntityListener.class , UserEntityListener.class})
 public class User extends BaseEntity{
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NonNull

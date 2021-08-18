@@ -4,10 +4,7 @@ import com.example.jpa.domain.listener.Auditable;
 import com.example.jpa.domain.listener.MyEntityListener;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
@@ -19,7 +16,7 @@ import java.time.LocalDateTime;
 public class UserHistory implements Auditable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long userId;

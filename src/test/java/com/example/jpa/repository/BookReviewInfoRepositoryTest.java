@@ -30,14 +30,15 @@ class BookReviewInfoRepositoryTest {
     private UserRepository userRepository;
 
     @Test
+    @Transactional
     void crudTest() {
         BookReviewInfo bookReviewInfo = new BookReviewInfo();
-
-
+        bookReviewInfo.setBook(givenBook(givenPublisher()));
         bookReviewInfo.setAverageReviewScore(4.5f);
         bookReviewInfo.setReviewCount(2);
-        bookReviewInfoRepository.save(bookReviewInfo);
 
+
+        bookReviewInfoRepository.save(bookReviewInfo);
         System.out.println(bookReviewInfoRepository.findAll());
     }
 

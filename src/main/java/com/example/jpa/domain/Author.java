@@ -4,24 +4,30 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.data.repository.NoRepositoryBean;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
-@Data
 @Entity
+@Data
 @NoArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class BookReviewInfo extends BaseEntity{
+public class Author extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(optional = false)
-    private Book book;
+    private String name;
 
-    private float averageReviewScore;
+    private String country;
 
-    private int reviewCount;
+    @ManyToMany
+    private List<Book> books = new ArrayList<>();
+
+
+
 }

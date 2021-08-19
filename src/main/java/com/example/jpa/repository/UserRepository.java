@@ -28,6 +28,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findByName(String name, Sort sort);
 
+    User findByEmail(String email);
+
     Page<User> findByName(String name, Pageable pageable);
 
     @Query(value = "select * from user limit 1;", nativeQuery = true)

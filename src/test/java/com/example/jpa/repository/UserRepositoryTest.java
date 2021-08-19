@@ -5,6 +5,7 @@ import com.example.jpa.domain.Gender;
 import com.example.jpa.domain.User;
 import com.example.jpa.domain.UserHistory;
 import org.assertj.core.util.Lists;
+import org.hibernate.criterion.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.internal.matchers.EndsWith;
@@ -121,4 +122,24 @@ class UserRepositoryTest {
         userHistoryRepository.findAll().forEach(System.out::println);
     }
 
+    @Test
+    void userRelationTest() {
+        User user = new User();
+        user.setName("david");
+        user.setEmail("davis@campus.com");
+        user.setGender(Gender.Male);
+
+        userRepository.save(user);
+
+        user.setName("dinai");
+        userRepository.save(user);
+
+        user.setEmail("dinai@fastcaom.com");
+        userRepository.save(user);
+
+        System.out.println(userHistoryRepository.findAll());
+        List<UserHistory> result = userRepository.findByEmail("dinai@fastcaom.com").getUserHistories();
+
+        result.forEach(System.out::println);
+    }
 }

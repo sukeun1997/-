@@ -7,14 +7,17 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Data
-@Builder
 @Entity
-@EntityListeners(value = {MyEntityListener.class , UserEntityListener.class})
+@EntityListeners(value = { UserEntityListener.class})
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 public class User extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,11 +30,10 @@ public class User extends BaseEntity{
     @NonNull
     private String email;
 
-    private LocalDateTime createdAt;
-
-    private LocalDateTime updatedAt;
-
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
 
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    @ToString.Exclude
+    private List<UserHistory> userHistories = new ArrayList<>();
 }

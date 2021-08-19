@@ -6,22 +6,25 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
-@Entity
 @NoArgsConstructor
+@Entity
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class BookReviewInfo extends BaseEntity{
+
+public class Publisher extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long Id;
 
-    @OneToOne(optional = false)
-    private Book book;
+    private String name;
 
-    private float averageReviewScore;
+    @OneToMany
+    @JoinColumn(name = "publisher_id")
+    private List<Book> bookList = new ArrayList<>();
 
-    private int reviewCount;
 }

@@ -1,14 +1,14 @@
 package com.example.jpa.domain;
 
+import javassist.expr.NewArray;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -25,5 +25,18 @@ public class Book extends BaseEntity{
 
     private Long authorId;
 
-    private Long publisherId;
+    @OneToOne
+    private BookReviewInfo bookReviewInfo;
+
+    @OneToMany
+    @JoinColumn(name = "book_id")
+    @ToString.Exclude
+    private List<Review> reviews = new ArrayList<>();
+
+    @ManyToOne
+    @ToString.Exclude
+    private Publisher publisher;
+
+    @ManyToMany
+    private List<Author> authors = new ArrayList<>();
 }

@@ -12,20 +12,19 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 @Entity
-@EntityListeners(value = MyEntityListener.class)
-public class UserHistory implements Auditable {
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
+public class UserHistory extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;
-
     private String name;
 
     private String email;
 
-    private LocalDateTime createdAt;
-
-    private LocalDateTime updatedAt;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

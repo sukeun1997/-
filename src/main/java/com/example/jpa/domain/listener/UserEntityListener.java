@@ -8,23 +8,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.PostPersist;
+import javax.persistence.PostUpdate;
+import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.transaction.Transactional;
 
-@Configurable
 public class UserEntityListener {
 
-    @PreUpdate
-    public void preUpdate(Object o) {
+    @PostPersist
+    @PostUpdate
+    public void prePersistAndPreUpdate(Object o) {
+        UserHistoryRepository userHistoryRepository = BeanUtils.getBean(UserHistoryRepository.class);
 
-       UserHistoryRepository userHistoryRepository = BeanUtils.getBean(UserHistoryRepository.class);
-
-        User user = (User)  o;
-
+        User user = (User) o;
         UserHistory userHistory = new UserHistory();
-        userHistory.setUserId(user.getId());
         userHistory.setName(user.getName());
         userHistory.setEmail(user.getEmail());
+        userHistory.setUser(user);
 
         userHistoryRepository.save(userHistory);
     }

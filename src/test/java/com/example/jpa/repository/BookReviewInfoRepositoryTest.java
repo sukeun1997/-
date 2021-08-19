@@ -73,7 +73,7 @@ class BookReviewInfoRepositoryTest {
 
         bookReviewInfoRepository.save(bookReviewInfo);
 
-        System.out.println(">>> "  + bookReviewInfoRepository.findAll());
+        System.out.println(">>> " + bookReviewInfoRepository.findAll());
     }
 
 
@@ -93,7 +93,8 @@ class BookReviewInfoRepositoryTest {
     private User givenUser() {
         return userRepository.findById(1L).orElseThrow(RuntimeException::new);
     }
-    private void givenReview(User user , Book book) {
+
+    private void givenReview(User user, Book book) {
         Review review = new Review();
         review.setTitle("jap");
         review.setContent("good");

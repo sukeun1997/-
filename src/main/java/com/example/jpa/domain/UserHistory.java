@@ -25,6 +25,6 @@ public class UserHistory extends BaseEntity {
     private String email;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @ToString.Exclude
     private User user;
 }

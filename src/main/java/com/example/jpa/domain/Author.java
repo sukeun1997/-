@@ -8,6 +8,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -25,9 +26,13 @@ public class Author extends BaseEntity{
 
     private String country;
 
-    @ManyToMany
-    private List<Book> books = new ArrayList<>();
+    @OneToMany(mappedBy = "author")
+    @ToString.Exclude
+    private List<BookAndAuthor> bookAndAuthor = new ArrayList<>();
 
+    public void addBookAndAuthor(BookAndAuthor... bookAndAuthors) {
+        Collections.addAll(this.bookAndAuthor, bookAndAuthors);
+    }
 
 
 }

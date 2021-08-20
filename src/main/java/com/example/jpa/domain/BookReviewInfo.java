@@ -10,8 +10,6 @@ import javax.persistence.*;
 @Data
 @Entity
 @NoArgsConstructor
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
 public class BookReviewInfo extends BaseEntity{
 
     @Id

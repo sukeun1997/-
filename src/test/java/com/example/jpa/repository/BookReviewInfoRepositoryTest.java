@@ -43,17 +43,17 @@ class BookReviewInfoRepositoryTest {
     }
 
     @Test
+    @Transactional
     void crudTest2() {
 
-        givenBookReviewInfo();
+        BookReviewInfo bookReviewInfo = new BookReviewInfo();
+        bookReviewInfo.setBook(givenBook(givenPublisher()));
+        bookReviewInfo.setAverageReviewScore(4.5f);
+        bookReviewInfo.setReviewCount(2);
 
-        Book result =
-                bookReviewInfoRepository
-                        .findById(1L)
-                        .orElseThrow(RuntimeException::new)
-                        .getBook();
-
-        System.out.println(">>>>" + result);
+        bookReviewInfoRepository.save(bookReviewInfo);
+        bookReviewInfo = bookReviewInfoRepository.findById(1L).get();
+        System.out.println(">>> " + bookReviewInfoRepository.findById(1L).get());
     }
 
     private Book givenBook(Publisher publisher) {
@@ -74,7 +74,7 @@ class BookReviewInfoRepositoryTest {
 
         bookReviewInfoRepository.save(bookReviewInfo);
 
-        System.out.println(">>> " + bookReviewInfoRepository.findAll());
+        System.out.println(">>> " + bookReviewInfoRepository.findById(1L));
     }
 
 

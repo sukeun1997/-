@@ -112,4 +112,31 @@ class BookReviewInfoRepositoryTest {
 
         return publisherRepository.save(publisher);
     }
+
+    @Test
+    @Transactional
+    void bookCscadeTest() {
+        Book book = new Book();
+        book.setName("Jpa ");
+
+        Publisher publisher = new Publisher();
+        publisher.setName("FasCam");
+
+
+        publisher.addBook(book);
+        book.setPublisher(publisher);
+        publisherRepository.save(publisher);
+
+        System.out.println("books : " + bookRepository.findAll());
+        System.out.println("publisher : " + publisherRepository.findAll());
+
+        Publisher publisher1 = publisherRepository.findById(1L).get();
+        publisher1.getBookList().get(0).setName("변경");
+
+        publisherRepository.save(publisher1);
+
+        System.out.println("check :" + publisherRepository.findAll());
+        System.out.println(" check 1 : " + bookRepository.findAll());
+
+    }
 }

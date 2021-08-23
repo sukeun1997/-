@@ -1,5 +1,8 @@
 package com.example.jpa.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javassist.expr.NewArray;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,6 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "id")
 public class Book extends BaseEntity{
 
     @Id
@@ -23,6 +27,8 @@ public class Book extends BaseEntity{
     private Long id;
 
     private String name;
+
+    private String category;
 
     private Long authorId;
 
@@ -35,7 +41,6 @@ public class Book extends BaseEntity{
     private List<Review> reviews = new ArrayList<>();
 
     @ManyToOne
-    @ToString.Exclude
     private Publisher publisher;
 
     @OneToMany(mappedBy = "book")

@@ -9,6 +9,8 @@ import org.springframework.test.context.support.PropertyProvider;
 
 import javax.transaction.Transactional;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -124,8 +126,7 @@ class BookReviewInfoRepositoryTest {
 
 
         publisher.addBook(book);
-        book.setPublisher(publisher);
-        publisherRepository.save(publisher);
+        publisherRepository.saveAndFlush(publisher);
 
         System.out.println("books : " + bookRepository.findAll());
         System.out.println("publisher : " + publisherRepository.findAll());
@@ -133,10 +134,37 @@ class BookReviewInfoRepositoryTest {
         Publisher publisher1 = publisherRepository.findById(1L).get();
         publisher1.getBookList().get(0).setName("변경");
 
-        publisherRepository.save(publisher1);
+        publisherRepository.saveAndFlush(publisher1);
 
-        System.out.println("check :" + publisherRepository.findAll());
-        System.out.println(" check 1 : " + bookRepository.findAll());
+        publisher.getBookList().clear();
 
+        System.out.println("Books :" + bookRepository.findAll());
+        System.out.println("publishers : " + publisherRepository.findAll());
+
+    }
+    @Test
+    @Transactional
+    void bookRemoveCascadeTest() {
+
+        System.out.println("books : " + bookRepository.findAll());
+
+        System.out.println("publisher : " + publisherRepository.findAll());
+
+        publisherRepository.findAll().forEach(publisher -> publisher.getBookList());
+
+        publisherRepository.findById(1L).get().setBookList(null);
+        publisherRepository.deleteById(1L);
+
+        System.out.println("books : " + bookRepository.findAll());
+    }
+
+    @Test
+    void queryTest() {
+        System.out.println("findByNameEqualsAndCreatedAtGreaterThanEqualAndUpdatedAtGreaterThanEqual" + bookRepository.findByNameEqualsAndCreatedAtGreaterThanEqualAndUpdatedAtGreaterThanEqual(
+                "jpa초격차패키지",
+                LocalDateTime.now().minusDays(1L),
+                LocalDateTime.now().minusDays(1L)));
+
+        System.out.println("findByNameRecently" + bookRepository.findByNameRecently("jpa초격차패키지",LocalDateTime.now().minusDays(1L),LocalDateTime.now().minusDays(1L)));
     }
 }

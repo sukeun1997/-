@@ -48,5 +48,6 @@ public class BookService {
        book.setName("asds");
        bookRepository.save(book);
 
+       System.out.println(bookRepository.findRowRecord());
     }
 }

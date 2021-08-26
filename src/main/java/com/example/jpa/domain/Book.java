@@ -1,5 +1,7 @@
 package com.example.jpa.domain;
 
+import com.example.jpa.domain.converter.BookSatusConverter;
+import com.example.jpa.repository.dto.BookStatus;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -36,7 +38,6 @@ public class Book extends BaseEntity{
     private BookReviewInfo bookReviewInfo;
 
     @OneToMany
-    @JoinColumn(name = "book_id")
     @ToString.Exclude
     private List<Review> reviews = new ArrayList<>();
 
@@ -46,6 +47,9 @@ public class Book extends BaseEntity{
     @OneToMany(mappedBy = "book")
     @ToString.Exclude
     private List<BookAndAuthor> bookAndAuthor = new ArrayList<>();
+
+//    @Convert(converter = BookSatusConverter.class)
+    private BookStatus status;
 
     public void addBookAndAuthor(BookAndAuthor... bookAndAuthors) {
         Collections.addAll(this.bookAndAuthor, bookAndAuthors);

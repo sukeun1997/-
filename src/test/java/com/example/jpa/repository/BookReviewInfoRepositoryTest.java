@@ -1,6 +1,7 @@
 package com.example.jpa.repository;
 
 import com.example.jpa.domain.*;
+import com.example.jpa.repository.dto.BookStatus;
 import org.hibernate.annotations.NaturalId;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,9 @@ import org.springframework.test.context.support.PropertyProvider;
 
 import javax.transaction.Transactional;
 
+import java.awt.geom.QuadCurve2D;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -166,5 +169,34 @@ class BookReviewInfoRepositoryTest {
                 LocalDateTime.now().minusDays(1L)));
 
         System.out.println("findByNameRecently" + bookRepository.findByNameRecently("jpa초격차패키지",LocalDateTime.now().minusDays(1L),LocalDateTime.now().minusDays(1L)));
+    }
+
+    @Test
+    void natvieQueryTest() {
+
+//        List<Book> books = bookRepository.findAll();
+//
+//        for (Book book : books) {
+//           book.setCategory("jpa 전문서");
+//        }
+//
+//        bookRepository.saveAll(books);
+//        System.out.println(bookRepository.findAll());
+
+        System.out.println("affected rows : " + bookRepository.updateCategories());
+        System.out.println(bookRepository.findAllCustom());
+
+    }
+
+    @Test
+    void converterTest() {
+        bookRepository.findAll().forEach(System.out::println);
+
+        Book book = new Book();
+        book.setName("전문서적");
+        book.setStatus(new BookStatus(200));
+        bookRepository.save(book);
+
+        System.out.println(bookRepository.findRowRecord().values());
     }
 }

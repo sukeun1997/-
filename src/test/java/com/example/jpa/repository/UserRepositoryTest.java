@@ -4,6 +4,7 @@ package com.example.jpa.repository;
 import com.example.jpa.domain.Gender;
 import com.example.jpa.domain.User;
 import com.example.jpa.domain.UserHistory;
+import com.example.jpa.domain.listener.Address;
 import org.assertj.core.util.Lists;
 import org.hibernate.criterion.Order;
 import org.junit.jupiter.api.Test;
@@ -141,5 +142,32 @@ class UserRepositoryTest {
         List<UserHistory> result = userRepository.findByEmail("dinai@fastcaom.com").getUserHistories();
 
         result.forEach(System.out::println);
+    }
+
+    @Test
+    void embedTest() {
+        userRepository.findAll().forEach(System.out::println);
+
+        User user = new User();
+        user.setName("steave");
+        user.setAddress(new Address("서울시", "강남구", "강남대로 364 미암빌딩","06241"));
+        user.setHomeAddress(new Address("서울시", "성동구",  "성수이로", "02134"));
+
+        userRepository.save(user);
+
+        User user1 = new User();
+        user1.setName("joshua");
+        user1.setHomeAddress(null);
+        user1.setAddress(null);
+
+        userRepository.save(user1);
+
+        User user2 = new User();
+        user2.setName("jardon");
+        user2.setHomeAddress(new Address());
+        user2.setAddress(new Address());
+        userRepository.save(user2);
+
+        userRepository.findAll().forEach(System.out::println);
     }
 }
